@@ -34,6 +34,24 @@ const gameManager = (function () {
         console.log(`${activePlayer.name} make your turn...`)
     }
 
+    const playRound = (row, col) => {
+            console.log(`Inserting at row ${row} and column ${col}...`);
+            gameboard.insertToken(row, col, activePlayer);
+            console.table(board);
+            if(!isWinner(activePlayer) && !isTie()){
+                switchPlayer();
+                printNewRound();
+            }
+            else if(isWinner(activePlayer)) {
+               console.log(`${activePlayer.name} has won the game`);
+               return;
+            }
+            else {
+                console.log(`It's a tie game`);
+                return;
+            }
+    }
+
     const getActivePlayer = () => {
        return players.find(player => player.getActive() === true);
     }

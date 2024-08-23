@@ -65,6 +65,25 @@ const gameManager = (function () {
         return board.every(innerArr => innerArr.every(cell => playerTokens.includes(cell)));
     }
 
+    const isWinner = (activePlayer) => {
+        let flatArr = board.flat()
+        
+        let tokenArr = flatArr.map((cell, index) => cell === activePlayer.token ? index : -1).filter(index => index !== -1).sort();
+
+        let winningIndexes = [
+            [0, 1, 2],
+            [3, 4, 5],
+            [6, 7, 8],
+            [0, 3, 6],
+            [1, 4, 7], 
+            [2, 5, 8], 
+            [0, 4, 8],
+            [2, 4, 6],
+        ];
+        
+        return winningIndexes.some(subArr => subArr.every(value => tokenArr.includes(value)));
+    }
+
 
     return { startGame, playRound, getPlayerTokens };
 })();

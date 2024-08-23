@@ -25,6 +25,11 @@ const gameManager = (function () {
         console.log("Player 1 make your turn...")
     }
 
+    const switchPlayer = () => {
+        players.forEach(player => player.setActive(!player.getActive()));
+        activePlayer = getActivePlayer();
+    }
+
 
     return { startGame, playRound, getPlayerTokens };
 })();

@@ -34,6 +34,10 @@ const gameManager = (function () {
         console.log(`${activePlayer.name} make your turn...`)
     }
 
+    const getActivePlayer = () => {
+       return players.find(player => player.getActive() === true);
+    }
+
 
     return { startGame, playRound, getPlayerTokens };
 })();

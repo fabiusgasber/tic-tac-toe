@@ -42,6 +42,11 @@ const gameManager = (function () {
         return players.map(player => player.token);
     }
 
+    const isTie = () => {
+        const playerTokens = getPlayerTokens();
+        return board.every(innerArr => innerArr.every(cell => playerTokens.includes(cell)));
+    }
+
 
     return { startGame, playRound, getPlayerTokens };
 })();

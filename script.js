@@ -38,6 +38,10 @@ const gameManager = (function () {
        return players.find(player => player.getActive() === true);
     }
 
+    const getPlayerTokens = () => {
+        return players.map(player => player.token);
+    }
+
 
     return { startGame, playRound, getPlayerTokens };
 })();

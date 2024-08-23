@@ -3,10 +3,12 @@ const gameboard = (function () {
     const rows = 3;
     const cols = 3;
 
-    for (let i = 0; i < rows; i++) {
-        board[i] = []
-        for (let j = 0; j < cols; j++) {
-            board[i][j] = null;
+    const initializeBoard = () => {
+        for (let i = 0; i < rows; i++) {
+            board[i] = []
+            for (let j = 0; j < cols; j++) {
+                board[i][j] = null;
+            }
         }
     }
 
@@ -21,7 +23,7 @@ const gameboard = (function () {
 
     const getBoard = () => board;
 
-    return { getBoard, insertToken };
+    return { getBoard, insertToken, initializeBoard };
 })();
 
 function createPlayer(name, token) {
@@ -46,6 +48,7 @@ const gameManager = (function () {
     const board = gameboard.getBoard()
 
     const startGame = () => {
+        gameboard.initializeBoard();
         players[0].setActive(true);
         activePlayer = players[0];
         console.log("Player 1 make your turn...")
@@ -70,11 +73,11 @@ const gameManager = (function () {
                 }
                 else if(isWinner(activePlayer)) {
                    console.log(`${activePlayer.name} has won the game`);
-                   return;
+                   gameboard.initializeBoard();
                 }
                 else if(isTie()) {
                     console.log(`It's a tie game`);
-                    return;
+                    gameboard.initializeBoard();
                 }
             }
             else {

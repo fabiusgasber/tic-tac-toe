@@ -119,6 +119,7 @@ const gameManager = (function () {
     }
 
 
-    return { startGame, playRound, getPlayerTokens };
+    return { startGame, playRound };
 })();
 
+gameManager.startGame();

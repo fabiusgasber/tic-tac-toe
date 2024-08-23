@@ -30,6 +30,10 @@ const gameManager = (function () {
         activePlayer = getActivePlayer();
     }
 
+    const printNewRound = () => {
+        console.log(`${activePlayer.name} make your turn...`)
+    }
+
 
     return { startGame, playRound, getPlayerTokens };
 })();

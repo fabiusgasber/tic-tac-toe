@@ -13,8 +13,8 @@ const gameboard = (function () {
     }
 
     const insertToken = (row, col, activePlayer) => {
-        if(row <= 2 && row >= 0 && col <= 2 && col >= 0 && board[row][col] === null && activePlayer.token && activePlayer.getActive)  {
-            board[row][col] = activePlayer?.token;
+        if(row <= 2 && row >= 0 && col <= 2 && col >= 0 && board[row][col] === null && activePlayer.getToken() && activePlayer.getActive())  {
+            board[row][col] = activePlayer?.getToken();
             return true;
         }
         return false;
@@ -26,22 +26,24 @@ const gameboard = (function () {
     return { getBoard, insertToken, initializeBoard };
 })();
 
-function createPlayer(name, token) {
+const createPlayer = (token) => {
 
     let active = false;
 
     const getActive = () => active;
 
     const setActive = (isActive) => active = isActive; 
+
+    const getToken = () => token;
     
-    return { name, token, getActive, setActive };
+    return { getToken, getActive, setActive };
 }
 
 const gameManager = (function () {
 
     const players = [
-        createPlayer('player1', 'X'),
-        createPlayer('player2', 'O')
+        createPlayer('X'),
+        createPlayer('O')
     ]
 
     let activePlayer = null;
@@ -51,7 +53,7 @@ const gameManager = (function () {
         gameboard.initializeBoard();
         players[0].setActive(true);
         activePlayer = players[0];
-        console.log("Player 1 make your turn...")
+        console.log("X make your turn...")
     }
 
     const switchPlayer = () => {
@@ -60,7 +62,7 @@ const gameManager = (function () {
     }
 
     const printNewRound = () => {
-        console.log(`${activePlayer.name} make your turn...`)
+        console.log(`${activePlayer.getToken()} make your turn...`)
     }
 
     const playRound = (row, col) => {
@@ -72,7 +74,7 @@ const gameManager = (function () {
                     printNewRound();
                 }
                 else if(isWinner(activePlayer)) {
-                   console.log(`${activePlayer.name} has won the game`);
+                   console.log(`${activePlayer.getToken()} has won the game`);
                    gameboard.initializeBoard();
                 }
                 else if(isTie()) {
@@ -91,7 +93,7 @@ const gameManager = (function () {
     }
 
     const getPlayerTokens = () => {
-        return players.map(player => player.token);
+        return players.map(player => player.getToken());
     }
 
     const isTie = () => {
@@ -102,7 +104,7 @@ const gameManager = (function () {
     const isWinner = (activePlayer) => {
         let flatArr = board.flat()
         
-        let tokenArr = flatArr.map((cell, index) => cell === activePlayer.token ? index : -1).filter(index => index !== -1).sort();
+        let tokenArr = flatArr.map((cell, index) => cell === activePlayer.getToken() ? index : -1).filter(index => index !== -1).sort();
 
         let winningIndexes = [
             [0, 1, 2],

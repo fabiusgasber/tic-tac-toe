@@ -19,6 +19,13 @@ const gameManager = (function () {
     let activePlayer = null;
     const board = gameboard.getBoard()
 
+    const startGame = () => {
+        players[0].setActive(true);
+        activePlayer = players[0];
+        console.log("Player 1 make your turn...")
+    }
+
+
     return { startGame, playRound, getPlayerTokens };
 })();
 

@@ -10,6 +10,15 @@ const gameboard = (function () {
         }
     }
 
+    const insertToken = (row, col, activePlayer) => {
+        if(row <= 2 && row >= 0 && col <= 2 && col >= 0 && board[row][col] === null && activePlayer.token && activePlayer.getActive)  {
+            board[row][col] = activePlayer?.token;
+            return true;
+        }
+        return false;
+    }
+
+
     const getBoard = () => board;
 
     return { getBoard, insertToken };

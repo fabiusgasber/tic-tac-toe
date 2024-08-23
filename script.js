@@ -62,19 +62,24 @@ const gameManager = (function () {
 
     const playRound = (row, col) => {
             console.log(`Inserting at row ${row} and column ${col}...`);
-            gameboard.insertToken(row, col, activePlayer);
-            console.table(board);
-            if(!isWinner(activePlayer) && !isTie()){
-                switchPlayer();
-                printNewRound();
-            }
-            else if(isWinner(activePlayer)) {
-               console.log(`${activePlayer.name} has won the game`);
-               return;
+            if(gameboard.insertToken(row, col, activePlayer)){
+                console.table(board);
+                if(!isWinner(activePlayer) && !isTie()){
+                    switchPlayer();
+                    printNewRound();
+                }
+                else if(isWinner(activePlayer)) {
+                   console.log(`${activePlayer.name} has won the game`);
+                   return;
+                }
+                else if(isTie()) {
+                    console.log(`It's a tie game`);
+                    return;
+                }
             }
             else {
-                console.log(`It's a tie game`);
-                return;
+                console.log('Already occupied. Choose another row / col');
+                printNewRound();
             }
     }
 

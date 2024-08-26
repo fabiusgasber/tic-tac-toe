@@ -1,20 +1,17 @@
 const gameboard = (function () {
     const board = [];
-    const rows = 3;
-    const cols = 3;
+    const cells = 9;
 
     const initializeBoard = () => {
-        for (let i = 0; i < rows; i++) {
-            board[i] = []
-            for (let j = 0; j < cols; j++) {
-                board[i][j] = null;
-            }
+        for (let i = 0; i < cells; i++) {
+                board[i] = null;
+        }
         }
     }
 
-    const insertToken = (row, col, activePlayer) => {
-        if(row <= 2 && row >= 0 && col <= 2 && col >= 0 && board[row][col] === null && activePlayer.getToken() && activePlayer.getActive())  {
-            board[row][col] = activePlayer?.getToken();
+    const insertToken = (index, activePlayer) => {
+        if(board[index] === null && activePlayer.getToken() && activePlayer.getActive())  {
+            board[index] = activePlayer?.getToken();
             return true;
         }
         return false;

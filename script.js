@@ -130,6 +130,11 @@ const displayController = (() => {
     const stopGame = () => {
         gameboardCells.forEach(cell => cell.removeEventListener('click', gameManager.playRound));
      }
+
+    const addMarks = (e, activePlayer) => {
+        e.target.textContent = activePlayer.getToken();
+    }
+ 
     return { startGame, stopGame, addMarks }
 })();
 

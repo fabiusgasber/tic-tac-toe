@@ -62,8 +62,8 @@ const gameManager = (function () {
         console.log(`${activePlayer.getToken()} make your turn...`)
     }
 
-    const playRound = (e) => {
-            if(gameboard.insertToken(e.target.dataset.id, activePlayer)){
+    const playRound = (e, index) => {
+            if(gameboard.insertToken(index, activePlayer)){
                 displayController.addMarks(e, activePlayer);
                 if(!isWinner(activePlayer) && !isTie()){
                     switchPlayer();
@@ -122,14 +122,20 @@ const gameManager = (function () {
 })();
 
 const displayController = (() => {
-    let gameboardCells = Array.from(document.querySelectorAll('#gameboard div'));
+    const gameboard = document.querySelector('#gameboard');
+    const cells = Array.from(gameboard.children);
+
+    const handleClick = (event) => {
+        const index = cells.indexOf(event.target);
+        gameManager.playRound(event, index);
+    }
      
     const startGame = () => {
-        gameboardCells.forEach(cell => cell.addEventListener('click', gameManager.playRound));
+        gameboard.addEventListener('click', handleClick);
     }
 
     const stopGame = () => {
-        gameboardCells.forEach(cell => cell.removeEventListener('click', gameManager.playRound));
+        gameboard.removeEventListener('click', handleClick);
      }
 
     const addMarks = (e, activePlayer) => {

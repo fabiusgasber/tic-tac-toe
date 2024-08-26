@@ -62,21 +62,22 @@ const gameManager = (function () {
         console.log(`${activePlayer.getToken()} make your turn...`)
     }
 
-    const playRound = (row, col) => {
-            console.log(`Inserting at row ${row} and column ${col}...`);
-            if(gameboard.insertToken(row, col, activePlayer)){
-                console.table(board);
+    const playRound = (e) => {
+            if(gameboard.insertToken(e.target.dataset.id, activePlayer)){
+                displayController.addMarks(e, activePlayer);
                 if(!isWinner(activePlayer) && !isTie()){
                     switchPlayer();
                     printNewRound();
                 }
                 else if(isWinner(activePlayer)) {
                    console.log(`${activePlayer.getToken()} has won the game`);
-                   gameboard.initializeBoard();
+                   gameboard.resetBoard();
+                   displayController.stopGame();
                 }
                 else if(isTie()) {
                     console.log(`It's a tie game`);
-                    gameboard.initializeBoard();
+                    gameboard.resetBoard();
+                    displayController.stopGame();
                 }
             }
             else {

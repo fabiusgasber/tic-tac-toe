@@ -123,6 +123,10 @@ const gameManager = (function () {
 const displayController = (() => {
     let gameboardCells = Array.from(document.querySelectorAll('#gameboard div'));
      
+    const startGame = () => {
+        gameboardCells.forEach(cell => cell.addEventListener('click', gameManager.playRound));
+    }
+
     return { startGame, stopGame, addMarks }
 })();
 

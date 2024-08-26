@@ -120,4 +120,10 @@ const gameManager = (function () {
     return { startGame, playRound };
 })();
 
+const displayController = (() => {
+    let gameboardCells = Array.from(document.querySelectorAll('#gameboard div'));
+     
+    return { startGame, stopGame, addMarks }
+})();
+
 gameManager.startGame();

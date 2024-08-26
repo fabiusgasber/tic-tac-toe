@@ -95,13 +95,12 @@ const gameManager = (function () {
 
     const isTie = () => {
         const playerTokens = getPlayerTokens();
-        return board.every(innerArr => innerArr.every(cell => playerTokens.includes(cell)));
+        return board.every(cell => playerTokens.includes(cell));
     }
 
     const isWinner = (activePlayer) => {
-        let flatArr = board.flat()
         
-        let tokenArr = flatArr.map((cell, index) => cell === activePlayer.getToken() ? index : -1).filter(index => index !== -1).sort();
+        let tokenArr = board.map((cell, index) => cell === activePlayer.getToken() ? index : -1).filter(index => index !== -1).sort();
 
         let winningIndexes = [
             [0, 1, 2],

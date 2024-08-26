@@ -2,10 +2,9 @@ const gameboard = (function () {
     const board = [];
     const cells = 9;
 
-    const initializeBoard = () => {
+    const resetBoard = () => {
         for (let i = 0; i < cells; i++) {
                 board[i] = null;
-        }
         }
     }
 
@@ -20,7 +19,7 @@ const gameboard = (function () {
 
     const getBoard = () => board;
 
-    return { getBoard, insertToken, initializeBoard };
+    return { getBoard, insertToken, resetBoard };
 })();
 
 const createPlayer = (token) => {
@@ -47,10 +46,11 @@ const gameManager = (function () {
     const board = gameboard.getBoard()
 
     const startGame = () => {
-        gameboard.initializeBoard();
+        gameboard.resetBoard();
+        displayController.startGame();
         players[0].setActive(true);
         activePlayer = players[0];
-        console.log("X make your turn...")
+        console.log(`${activePlayer.getToken()} make your turn...`)
     }
 
     const switchPlayer = () => {

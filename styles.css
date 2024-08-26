@@ -16,3 +16,9 @@ body {
     grid-template-rows: repeat(3, 1fr);
 }
 
+#gameboard div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: var(--border);
+}

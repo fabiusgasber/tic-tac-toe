@@ -127,6 +127,9 @@ const displayController = (() => {
         gameboardCells.forEach(cell => cell.addEventListener('click', gameManager.playRound));
     }
 
+    const stopGame = () => {
+        gameboardCells.forEach(cell => cell.removeEventListener('click', gameManager.playRound));
+     }
     return { startGame, stopGame, addMarks }
 })();
 

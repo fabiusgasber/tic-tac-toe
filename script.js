@@ -113,7 +113,10 @@ const gameManager = (function () {
 
 const displayController = (() => {
     const gameboard = document.querySelector('#gameboard');
+    const restartButton = document.querySelector('#restart');
     const cells = Array.from(gameboard.children);
+
+    restartButton.addEventListener('click', gameManager.startGame);
 
     const handleClick = (event) => {
         const index = cells.indexOf(event.target);

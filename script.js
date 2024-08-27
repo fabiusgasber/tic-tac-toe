@@ -123,6 +123,10 @@ const displayController = (() => {
         const index = cells.indexOf(event.target);
         gameManager.playRound(event, index);
     }
+
+    const displayRoundText = (text) => {
+        roundText.textContent = text;
+    }
      
     const startGame = () => {
         gameboard.addEventListener('click', handleClick);
@@ -140,7 +144,7 @@ const displayController = (() => {
         cells.forEach(cell => cell.textContent = "");
     }
  
-    return { startGame, stopGame, displayToken, resetBoard }
+    return { startGame, stopGame, displayToken, resetBoard, displayRoundText }
 })();
 
 gameManager.startGame();

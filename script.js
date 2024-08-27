@@ -69,12 +69,10 @@ const gameManager = (function () {
                 }
                 else if(isWinner(activePlayer)) {
                    console.log(`${activePlayer.getToken()} has won the game`);
-                   gameboard.resetBoard();
                    displayController.stopGame();
                 }
                 else if(isTie()) {
                     console.log(`It's a tie game`);
-                    gameboard.resetBoard();
                     displayController.stopGame();
                 }
             }

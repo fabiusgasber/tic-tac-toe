@@ -52,7 +52,7 @@ const gameManager = (function () {
         players[1].setActive(false);
         activePlayer = players[0];
         displayController.startGame();
-        console.log(`${activePlayer.getToken()} make your turn...`)
+        displayController.displayRoundText(`${activePlayer.getToken()} make your turn...`)
     }
 
     const switchPlayer = () => {
@@ -65,19 +65,19 @@ const gameManager = (function () {
                 displayController.displayToken(event, activePlayer);
                 if(!isWinner(activePlayer) && !isTie()){
                     switchPlayer();
-                    console.log(`${activePlayer.getToken()} make your turn...`)
+                    displayController.displayRoundText(`${activePlayer.getToken()} make your turn...`)
                 }
                 else if(isWinner(activePlayer)) {
-                   console.log(`${activePlayer.getToken()} has won the game`);
+                   displayController.displayRoundText(`${activePlayer.getToken()} has won the game`);
                    displayController.stopGame();
                 }
                 else if(isTie()) {
-                    console.log(`It's a tie game`);
+                    displayController.displayRoundText(`It's a tie game`);
                     displayController.stopGame();
                 }
             }
             else {
-                console.log('Already occupied. Choose another row / col');
+                displayController.displayRoundText('Already occupied. Choose another row / col');
             }
     }
 

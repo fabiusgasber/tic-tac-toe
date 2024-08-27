@@ -47,9 +47,11 @@ const gameManager = (function () {
 
     const startGame = () => {
         gameboard.resetBoard();
-        displayController.startGame();
+        displayController.resetBoard();
         players[0].setActive(true);
+        players[1].setActive(false);
         activePlayer = players[0];
+        displayController.startGame();
         console.log(`${activePlayer.getToken()} make your turn...`)
     }
 

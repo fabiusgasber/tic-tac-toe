@@ -47,9 +47,11 @@ const gameManager = (function () {
 
     const startGame = () => {
         gameboard.resetBoard();
-        displayController.startGame();
+        displayController.resetBoard();
         players[0].setActive(true);
+        players[1].setActive(false);
         activePlayer = players[0];
+        displayController.startGame();
         console.log(`${activePlayer.getToken()} make your turn...`)
     }
 
@@ -67,12 +69,10 @@ const gameManager = (function () {
                 }
                 else if(isWinner(activePlayer)) {
                    console.log(`${activePlayer.getToken()} has won the game`);
-                   gameboard.resetBoard();
                    displayController.stopGame();
                 }
                 else if(isTie()) {
                     console.log(`It's a tie game`);
-                    gameboard.resetBoard();
                     displayController.stopGame();
                 }
             }
@@ -113,7 +113,10 @@ const gameManager = (function () {
 
 const displayController = (() => {
     const gameboard = document.querySelector('#gameboard');
+    const restartButton = document.querySelector('#restart');
     const cells = Array.from(gameboard.children);
+
+    restartButton.addEventListener('click', gameManager.startGame);
 
     const handleClick = (event) => {
         const index = cells.indexOf(event.target);
@@ -131,8 +134,12 @@ const displayController = (() => {
     const displayToken = (event, activePlayer) => {
         event.target.textContent = activePlayer.getToken();
     }
+
+    const resetBoard = () => {
+        cells.forEach(cell => cell.textContent = "");
+    }
  
-    return { startGame, stopGame, displayToken }
+    return { startGame, stopGame, displayToken, resetBoard }
 })();
 
 gameManager.startGame();

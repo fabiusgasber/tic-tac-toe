@@ -134,8 +134,12 @@ const displayController = (() => {
     const displayToken = (event, activePlayer) => {
         event.target.textContent = activePlayer.getToken();
     }
+
+    const resetBoard = () => {
+        cells.forEach(cell => cell.textContent = "");
+    }
  
-    return { startGame, stopGame, displayToken }
+    return { startGame, stopGame, displayToken, resetBoard }
 })();
 
 gameManager.startGame();

@@ -1,20 +1,16 @@
 const gameboard = (function () {
     const board = [];
-    const rows = 3;
-    const cols = 3;
+    const cells = 9;
 
-    const initializeBoard = () => {
-        for (let i = 0; i < rows; i++) {
-            board[i] = []
-            for (let j = 0; j < cols; j++) {
-                board[i][j] = null;
-            }
+    const resetBoard = () => {
+        for (let i = 0; i < cells; i++) {
+                board[i] = null;
         }
     }
 
-    const insertToken = (row, col, activePlayer) => {
-        if(row <= 2 && row >= 0 && col <= 2 && col >= 0 && board[row][col] === null && activePlayer.getToken() && activePlayer.getActive())  {
-            board[row][col] = activePlayer?.getToken();
+    const insertToken = (index, activePlayer) => {
+        if(board[index] === null && activePlayer.getToken() && activePlayer.getActive())  {
+            board[index] = activePlayer?.getToken();
             return true;
         }
         return false;
@@ -23,7 +19,7 @@ const gameboard = (function () {
 
     const getBoard = () => board;
 
-    return { getBoard, insertToken, initializeBoard };
+    return { getBoard, insertToken, resetBoard };
 })();
 
 const createPlayer = (token) => {
@@ -50,10 +46,11 @@ const gameManager = (function () {
     const board = gameboard.getBoard()
 
     const startGame = () => {
-        gameboard.initializeBoard();
+        gameboard.resetBoard();
+        displayController.startGame();
         players[0].setActive(true);
         activePlayer = players[0];
-        console.log("X make your turn...")
+        console.log(`${activePlayer.getToken()} make your turn...`)
     }
 
     const switchPlayer = () => {
@@ -61,30 +58,26 @@ const gameManager = (function () {
         activePlayer = getActivePlayer();
     }
 
-    const printNewRound = () => {
-        console.log(`${activePlayer.getToken()} make your turn...`)
-    }
-
-    const playRound = (row, col) => {
-            console.log(`Inserting at row ${row} and column ${col}...`);
-            if(gameboard.insertToken(row, col, activePlayer)){
-                console.table(board);
+    const playRound = (event, index) => {
+            if(gameboard.insertToken(index, activePlayer)){
+                displayController.displayToken(event, activePlayer);
                 if(!isWinner(activePlayer) && !isTie()){
                     switchPlayer();
-                    printNewRound();
+                    console.log(`${activePlayer.getToken()} make your turn...`)
                 }
                 else if(isWinner(activePlayer)) {
                    console.log(`${activePlayer.getToken()} has won the game`);
-                   gameboard.initializeBoard();
+                   gameboard.resetBoard();
+                   displayController.stopGame();
                 }
                 else if(isTie()) {
                     console.log(`It's a tie game`);
-                    gameboard.initializeBoard();
+                    gameboard.resetBoard();
+                    displayController.stopGame();
                 }
             }
             else {
                 console.log('Already occupied. Choose another row / col');
-                printNewRound();
             }
     }
 
@@ -92,19 +85,13 @@ const gameManager = (function () {
        return players.find(player => player.getActive() === true);
     }
 
-    const getPlayerTokens = () => {
-        return players.map(player => player.getToken());
-    }
-
     const isTie = () => {
-        const playerTokens = getPlayerTokens();
-        return board.every(innerArr => innerArr.every(cell => playerTokens.includes(cell)));
+        return board.every(cell => cell !== null);
     }
 
     const isWinner = (activePlayer) => {
-        let flatArr = board.flat()
         
-        let tokenArr = flatArr.map((cell, index) => cell === activePlayer.getToken() ? index : -1).filter(index => index !== -1).sort();
+        let tokenArr = board.map((cell, index) => cell === activePlayer.getToken() ? index : -1).filter(index => index !== -1).sort();
 
         let winningIndexes = [
             [0, 1, 2],
@@ -122,6 +109,30 @@ const gameManager = (function () {
 
 
     return { startGame, playRound };
+})();
+
+const displayController = (() => {
+    const gameboard = document.querySelector('#gameboard');
+    const cells = Array.from(gameboard.children);
+
+    const handleClick = (event) => {
+        const index = cells.indexOf(event.target);
+        gameManager.playRound(event, index);
+    }
+     
+    const startGame = () => {
+        gameboard.addEventListener('click', handleClick);
+    }
+
+    const stopGame = () => {
+        gameboard.removeEventListener('click', handleClick);
+     }
+
+    const displayToken = (event, activePlayer) => {
+        event.target.textContent = activePlayer.getToken();
+    }
+ 
+    return { startGame, stopGame, displayToken }
 })();
 
 gameManager.startGame();

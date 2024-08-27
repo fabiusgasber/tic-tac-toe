@@ -1,9 +1,25 @@
 :root {
     --font-size: 16px;
     --background-color: #fff;
+    --border: 1px solid black;
 }
 
 body {
     background-color: var(--background-color);
     font-size: var(--font-size);
+}
+
+#gameboard {
+    display: grid;
+    width: 500px;
+    height: 500px;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+}
+
+#gameboard div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: var(--border);
 }

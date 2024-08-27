@@ -58,16 +58,12 @@ const gameManager = (function () {
         activePlayer = getActivePlayer();
     }
 
-    const printNewRound = () => {
-        console.log(`${activePlayer.getToken()} make your turn...`)
-    }
-
-    const playRound = (e, index) => {
+    const playRound = (event, index) => {
             if(gameboard.insertToken(index, activePlayer)){
-                displayController.addMarks(e, activePlayer);
+                displayController.displayToken(event, activePlayer);
                 if(!isWinner(activePlayer) && !isTie()){
                     switchPlayer();
-                    printNewRound();
+                    console.log(`${activePlayer.getToken()} make your turn...`)
                 }
                 else if(isWinner(activePlayer)) {
                    console.log(`${activePlayer.getToken()} has won the game`);
@@ -82,7 +78,6 @@ const gameManager = (function () {
             }
             else {
                 console.log('Already occupied. Choose another row / col');
-                printNewRound();
             }
     }
 
@@ -90,13 +85,8 @@ const gameManager = (function () {
        return players.find(player => player.getActive() === true);
     }
 
-    const getPlayerTokens = () => {
-        return players.map(player => player.getToken());
-    }
-
     const isTie = () => {
-        const playerTokens = getPlayerTokens();
-        return board.every(cell => playerTokens.includes(cell));
+        return board.every(cell => cell !== null);
     }
 
     const isWinner = (activePlayer) => {
@@ -138,11 +128,11 @@ const displayController = (() => {
         gameboard.removeEventListener('click', handleClick);
      }
 
-    const addMarks = (e, activePlayer) => {
-        e.target.textContent = activePlayer.getToken();
+    const displayToken = (event, activePlayer) => {
+        event.target.textContent = activePlayer.getToken();
     }
  
-    return { startGame, stopGame, addMarks }
+    return { startGame, stopGame, displayToken }
 })();
 
 gameManager.startGame();

@@ -44,8 +44,10 @@ main {
 }
 
 body {
-    background-color: var(--background-color);
+    background-color: var(--base-color);
+    color: var(--secondary-color);
     font-size: var(--font-size);
+    font-family: roboto, sans-serif;
 }
 
 #gameboard {

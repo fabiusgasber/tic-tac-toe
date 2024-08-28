@@ -101,8 +101,10 @@ const gameManager = (function () {
             [0, 4, 8],
             [2, 4, 6],
         ];
-        
-        return winningIndexes.some(subArr => subArr.every(value => tokenArr.includes(value)));
+
+        const winningIndex = winningIndexes.findIndex(subArr => subArr.every(value => tokenArr.includes(value)))
+
+        return winningIndex !== -1 ? winningIndexes[winningIndex] : -1;
     }
 
 

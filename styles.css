@@ -17,6 +17,11 @@
     src: url(fonts/Roboto/Roboto-Black.ttf)
 }
 
+h1, p {
+    margin-block-start: 0;
+    margin-block-end: 0;
+}
+
 }
 
 body {

@@ -124,8 +124,19 @@ const displayController = (() => {
         gameManager.playRound(event, index);
     }
 
+    const displayRound = (activePlayer, action, winningArr) => {
+        switch(action) {
     const displayRoundText = (text) => {
         roundText.textContent = text;
+                roundText.textContent = `It's a tie game`;
+                stopGame();
+                break;
+            case 'occupied':
+                roundText.textContent = 'Already occupied. Choose another cell.';
+                break;
+            default:
+                roundText.textContent = `${activePlayer.getToken()} make your turn...`
+        }
     }
      
     const startGame = () => {

@@ -67,7 +67,7 @@ body {
     font-size: 80px;
 }
 
-#gameboard div:hover {
+#gameboard div:hover, .winning-column {
     background-color: var(--accent-color)
 }
 

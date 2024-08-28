@@ -126,8 +126,12 @@ const displayController = (() => {
 
     const displayRound = (activePlayer, action, winningArr) => {
         switch(action) {
-    const displayRoundText = (text) => {
-        roundText.textContent = text;
+            case 'won':
+               roundText.textContent = `${activePlayer.getToken()} has won the game`
+               cells.forEach((cell, index) => winningArr.includes(index) ? cell.className = 'winning-column' : '');
+               stopGame();
+               break;
+            case 'tie': 
                 roundText.textContent = `It's a tie game`;
                 stopGame();
                 break;

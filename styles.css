@@ -7,6 +7,16 @@
     box-sizing: border-box;
 }
 
+@font-face {
+    font-family: anton;
+    src: url(fonts/Anton/Anton-Regular.ttf);
+}
+
+@font-face {
+    font-family: roboto;
+    src: url(fonts/Roboto/Roboto-Black.ttf)
+}
+
 }
 
 body {

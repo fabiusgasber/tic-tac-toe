@@ -18,3 +18,5 @@ During this project, I will deepen my understanding of:
 - A playable Tic Tac Toe game directly in the browser
 - Object-oriented design for game components
 - Use of modern JavaScript features and best practices
+
+A working live demo can be found [here](https://fabiusgasber.github.io/tic-tac-toe/). 

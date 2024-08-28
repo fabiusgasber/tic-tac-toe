@@ -77,7 +77,7 @@ const gameManager = (function () {
                 }
             }
             else {
-                displayController.displayRoundText('Already occupied. Choose another row / col');
+                displayController.displayRoundText('Already occupied. Choose another cell.');
             }
     }
 

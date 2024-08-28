@@ -162,7 +162,7 @@ const displayController = (() => {
         });
     }
  
-    return { startGame, stopGame, displayToken, resetBoard, displayRoundText }
+    return { startGame, displayToken, resetBoard, displayRound }
 })();
 
 gameManager.startGame();

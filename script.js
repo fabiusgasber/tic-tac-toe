@@ -156,7 +156,10 @@ const displayController = (() => {
     }
 
     const resetBoard = () => {
-        cells.forEach(cell => cell.textContent = "");
+        cells.forEach(cell => {
+            cell.textContent = "";
+            cell.className = ""
+        });
     }
  
     return { startGame, stopGame, displayToken, resetBoard, displayRoundText }

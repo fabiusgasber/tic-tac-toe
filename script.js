@@ -52,7 +52,7 @@ const gameManager = (function () {
         players[1].setActive(false);
         activePlayer = players[0];
         displayController.startGame();
-        displayController.displayRoundText(`${activePlayer.getToken()} make your turn...`)
+        displayController.displayRound(activePlayer);
     }
 
     const switchPlayer = () => {
@@ -63,21 +63,19 @@ const gameManager = (function () {
     const playRound = (event, index) => {
             if(gameboard.insertToken(index, activePlayer)){
                 displayController.displayToken(event, activePlayer);
-                if(!isWinner(activePlayer) && !isTie()){
+                if(isWinner(activePlayer) === -1 && !isTie()){
                     switchPlayer();
-                    displayController.displayRoundText(`${activePlayer.getToken()} make your turn...`)
+                    displayController.displayRound(activePlayer);
                 }
-                else if(isWinner(activePlayer)) {
-                   displayController.displayRoundText(`${activePlayer.getToken()} has won the game`);
-                   displayController.stopGame();
+                else if(isWinner(activePlayer) !== -1) {
+                   displayController.displayRound(activePlayer, 'won', isWinner(activePlayer));
                 }
                 else if(isTie()) {
-                    displayController.displayRoundText(`It's a tie game`);
-                    displayController.stopGame();
+                    displayController.displayRound(activePlayer, 'tie');
                 }
             }
             else {
-                displayController.displayRoundText('Already occupied. Choose another cell.');
+                displayController.displayRound(activePlayer, 'occupied');
             }
     }
 
@@ -103,8 +101,10 @@ const gameManager = (function () {
             [0, 4, 8],
             [2, 4, 6],
         ];
-        
-        return winningIndexes.some(subArr => subArr.every(value => tokenArr.includes(value)));
+
+        const winningIndex = winningIndexes.findIndex(subArr => subArr.every(value => tokenArr.includes(value)))
+
+        return winningIndex !== -1 ? winningIndexes[winningIndex] : -1;
     }
 
 
@@ -124,8 +124,23 @@ const displayController = (() => {
         gameManager.playRound(event, index);
     }
 
-    const displayRoundText = (text) => {
-        roundText.textContent = text;
+    const displayRound = (activePlayer, action, winningArr) => {
+        switch(action) {
+            case 'won':
+               roundText.textContent = `${activePlayer.getToken()} has won the game`
+               cells.forEach((cell, index) => winningArr.includes(index) ? cell.className = 'winning-column' : '');
+               stopGame();
+               break;
+            case 'tie': 
+                roundText.textContent = `It's a tie game`;
+                stopGame();
+                break;
+            case 'occupied':
+                roundText.textContent = 'Already occupied. Choose another cell.';
+                break;
+            default:
+                roundText.textContent = `${activePlayer.getToken()} make your turn...`
+        }
     }
      
     const startGame = () => {
@@ -141,10 +156,13 @@ const displayController = (() => {
     }
 
     const resetBoard = () => {
-        cells.forEach(cell => cell.textContent = "");
+        cells.forEach(cell => {
+            cell.textContent = "";
+            cell.className = ""
+        });
     }
  
-    return { startGame, stopGame, displayToken, resetBoard, displayRoundText }
+    return { startGame, displayToken, resetBoard, displayRound }
 })();
 
 gameManager.startGame();

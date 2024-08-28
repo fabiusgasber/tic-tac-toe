@@ -66,4 +66,9 @@ body {
     border: var(--border);
     font-size: 80px;
 }
+
+#gameboard div:hover {
+    background-color: var(--accent-color)
+}
+
 }

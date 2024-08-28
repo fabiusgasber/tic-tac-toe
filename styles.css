@@ -1,7 +1,12 @@
 :root {
-    --font-size: 16px;
-    --background-color: #fff;
-    --border: 1px solid black;
+    --font-size: 2rem;
+    --base-color: #fff;
+    --secondary-color: #000;
+    --accent-color: #ffff00;
+    --border: 1px solid var(--secondary-color);
+    box-sizing: border-box;
+}
+
 }
 
 body {
